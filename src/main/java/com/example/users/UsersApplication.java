@@ -38,13 +38,7 @@ public class UsersApplication {
         // TEST GET ONE
         System.out.println(userService.getUserById(1));
 
-
-
-
     }
-
-
-
 
 
 }

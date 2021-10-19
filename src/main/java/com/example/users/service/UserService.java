@@ -1,7 +1,6 @@
 package com.example.users.service;
 
 import com.example.users.model.User;
-
 import java.util.List;
 
 public interface UserService {
