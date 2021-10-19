@@ -10,12 +10,18 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
 
 
 @Entity(name = "User")
 public class User {
+    public User(String firstName, String lastName, String email, String userName, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userName = userName;
+        this.password = password;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,8 +31,4 @@ public class User {
     private String email;
     private String userName;
     private String password;
-
-
-
-
 }

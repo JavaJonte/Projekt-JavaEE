@@ -5,12 +5,13 @@ import com.example.users.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-   @Autowired
+    @Autowired
     UserRepository repo;
 
     @Override
@@ -21,21 +22,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Integer id) {
-        return null;
+        return repo.findById(id).get();
+        // FEL HANTERING
     }
 
     @Override
     public void updateUser(Integer id) {
-
     }
 
     @Override
     public void deleteUser(User user) {
-
+        repo.delete(user);
     }
 
     @Override
     public List<User> getAllUsers() {
-        return null;
+        return repo.findAll();
     }
 }
