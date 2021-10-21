@@ -30,7 +30,7 @@ public class UsersApplication {
         System.out.println(userService.getAllUsers());
 
         // TEST DELETE
-        userService.deleteUser(test2);
+        System.out.println(userService.deleteUser(test2));
 
         // TEST LISTA IGEN
         System.out.println(userService.getAllUsers());

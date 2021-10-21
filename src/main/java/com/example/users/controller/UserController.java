@@ -1,18 +1,15 @@
 package com.example.users.controller;
 
 import com.example.users.model.User;
+import com.example.users.model.Users;
 import com.example.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.awt.desktop.OpenFilesEvent;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -26,64 +23,69 @@ public class UserController {
 
         System.out.println("SER VI DETTA I LOGGEN?");
         User user = userService.getUserById(id);
-        System.out.println(user); // rad för test att d funkar
-        //model.addAttribute("id", id);
+
         model.addAttribute("user", user);
         return "index";
     }
 
-    @RequestMapping(value ="/createAccount", method = RequestMethod.POST)
-    public String postAccount(@RequestParam(value = "userName", required = true) String userName,
-                              @RequestParam(value = "firstName", required = true) String firstName,
-                              @RequestParam(value = "lastName", required = true)String lastName,
-                              @RequestParam(value = "email", required = true)String email,
-                              @RequestParam(value = "password", required = true)String password,
+    @RequestMapping(value= "/createAccount", method = RequestMethod.POST)
+    public String postAccount(@RequestParam(value = "user", required = false) String userName,
+                              @RequestParam(value = "firstName", required = false) String firstName,
+                              @RequestParam(value = "lastName", required = false)String lastName,
+                              @RequestParam(value = "email", required = false)String email,
+                              @RequestParam(value = "password", required = false)String password,
                               @RequestParam(value = "rePassword", required = false)String rePassword,
                               @RequestParam(value = "deletePassword", required = false)String deletePassword,
                               Model model){
-
         User user = new User(firstName, lastName, email, userName, password);
         userService.createUser(user);
-        System.out.println(userService.getAllUsers());
-
-            model.addAttribute("user", user);  // <-- user är nu ett helt pojo istället för en sträng
-           // model.addAttribute("firstName", firstName); // denna rad kan tas bort
-          //  model.addAttribute("lastName", lastName); // denna rad kan tas bort
-           // model.addAttribute("email", email); // denna rad kan tas bort
-          //  model.addAttribute("password", password); // denna rad kan tas bort
-          //  model.addAttribute("rePassword", rePassword);
-           // model.addAttribute("deletePassword", deletePassword);
-
-            return "createdTestFile";
-           // return "createAccount";
-
-
-    }
-    @RequestMapping("/login")
-    public String checkLogin(@RequestParam(value = "user", required = false)String user,
-                             @RequestParam(value = "password", required = false)String password,
-                             Model model){
 
             model.addAttribute("user", user);
+            model.addAttribute("firstName", firstName);
+            model.addAttribute("lastName", lastName);
+            model.addAttribute("email", email);
             model.addAttribute("password", password);
-
-
-            return "login";
-
+            model.addAttribute("rePassword", rePassword);
+            model.addAttribute("deletePassword", deletePassword);
+            return "createAccount";
 
 
     }
-    @RequestMapping("/forgotPassword")
-    public String getPassword(){
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String checkLogin(Model model){
+            model.addAttribute("users", new Users());
+            return "login";
+    }
+    @RequestMapping(value = "/login/accountManagement", method = RequestMethod.POST)
+    public String logOn(@ModelAttribute Users users, Model model){
+
+        // if users.userName exists  -> check password
+
+        model.addAttribute("users", users);
+    return "accountManagement";
+    }
+
+    @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
+    public String getPassword(Model model){
+        model.addAttribute("users", new Users());
         return "forgotPassword";
     }
-    @RequestMapping("/login/accountManagement")
-    public String showAccount(){
-        return "accountManagement";
+    @RequestMapping(value = "/forgotPassword/passRecovery", method = RequestMethod.POST)
+    public String postSent(@ModelAttribute Users users, Model model){
+
+        model.addAttribute("users", users);
+        return "passRecovery";
     }
-    @RequestMapping("/updateAccount")
-    public String updateAccount(){
+    @RequestMapping(value = "/updateAccount", method = RequestMethod.GET)
+    public String updateAccount(Model model){
+        model.addAttribute("users", new Users());
         return "updateAccount";
+    }
+
+    @RequestMapping(value = "/updateAccount/updated/accountManagement", method = RequestMethod.POST)
+    public String updated(@ModelAttribute Users users, Model model){
+        model.addAttribute("users", users);
+        return "accountManagement";
     }
 
 
