@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.awt.desktop.OpenFilesEvent;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -23,8 +25,10 @@ public class UserController {
     public String getIndex(@RequestParam(value = "id", required = true, defaultValue = "1") Integer id, Model model) {
 
         System.out.println("SER VI DETTA I LOGGEN?");
-        System.out.println(userService.getUserById(id));
-        model.addAttribute("id", id);
+        User user = userService.getUserById(id);
+        System.out.println(user); // rad för test att d funkar
+        //model.addAttribute("id", id);
+        model.addAttribute("user", user);
         return "index";
     }
 

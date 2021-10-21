@@ -25,7 +25,7 @@
     Home Nav
 </div>
 <div id="home-main-content">
-    <h2>HEJ INDEX!</h2>
+    <h2 th:text="${user.firstName}"></h2>
     <form th:action="@{/}">
         <input type="text" th:name="participant"/>
         <input type="submit"/>
