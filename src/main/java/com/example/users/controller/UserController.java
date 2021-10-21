@@ -5,9 +5,12 @@ import com.example.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -17,9 +20,10 @@ public class UserController {
     //UserRepository repo;
 
     @RequestMapping("/")
-    public String getIndex(@RequestParam(value = "id", required = false) Integer id, Model model) {
+    public String getIndex(@RequestParam(value = "id", required = true, defaultValue = "1") Integer id, Model model) {
 
         System.out.println("SER VI DETTA I LOGGEN?");
+        System.out.println(userService.getUserById(id));
         model.addAttribute("id", id);
         return "index";
     }
@@ -37,17 +41,17 @@ public class UserController {
         User user = new User(firstName, lastName, email, userName, password);
         userService.createUser(user);
         System.out.println(userService.getAllUsers());
-/**/
-            model.addAttribute("user", user);
-            model.addAttribute("firstName", firstName);
-            model.addAttribute("lastName", lastName);
-            model.addAttribute("email", email);
-            model.addAttribute("password", password);
-            model.addAttribute("rePassword", rePassword);
-            model.addAttribute("deletePassword", deletePassword);
 
+            model.addAttribute("user", user);  // <-- user är nu ett helt pojo istället för en sträng
+           // model.addAttribute("firstName", firstName); // denna rad kan tas bort
+          //  model.addAttribute("lastName", lastName); // denna rad kan tas bort
+           // model.addAttribute("email", email); // denna rad kan tas bort
+          //  model.addAttribute("password", password); // denna rad kan tas bort
+          //  model.addAttribute("rePassword", rePassword);
+           // model.addAttribute("deletePassword", deletePassword);
 
-            return "createAccount";
+            return "createdTestFile";
+           // return "createAccount";
 
 
     }

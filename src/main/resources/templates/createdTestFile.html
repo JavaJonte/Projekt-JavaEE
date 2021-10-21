@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<h1>Skapad användare!</h1>
+<p th:text="${user.firstName}"/>
+<p th:text="${user.lastName}"/>
+<p th:text="${user.email}"/>
 
 </body>
 </html>
