@@ -1,16 +1,20 @@
 package com.example.users.controller;
 
+import com.example.users.model.User;
+import com.example.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
 
     @Autowired
-    UserRepository repo;
+    UserService userService;
+    //UserRepository repo;
 
     @RequestMapping("/")
     public String getIndex(@RequestParam(value = "id", required = false) Integer id, Model model) {
@@ -20,17 +24,20 @@ public class UserController {
         return "index";
     }
 
-    @RequestMapping("/createAccount")
-    public String postAccount(@RequestParam(value = "user", required = false) String user,
-                              @RequestParam(value = "firstName", required = false) String firstName,
-                              @RequestParam(value = "lastName", required = false)String lastName,
-                              @RequestParam(value = "email", required = false)String email,
-                              @RequestParam(value = "password", required = false)String password,
+    @RequestMapping(value ="/createAccount", method = RequestMethod.POST)
+    public String postAccount(@RequestParam(value = "userName", required = true) String userName,
+                              @RequestParam(value = "firstName", required = true) String firstName,
+                              @RequestParam(value = "lastName", required = true)String lastName,
+                              @RequestParam(value = "email", required = true)String email,
+                              @RequestParam(value = "password", required = true)String password,
                               @RequestParam(value = "rePassword", required = false)String rePassword,
                               @RequestParam(value = "deletePassword", required = false)String deletePassword,
                               Model model){
 
-
+        User user = new User(firstName, lastName, email, userName, password);
+        userService.createUser(user);
+        System.out.println(userService.getAllUsers());
+/**/
             model.addAttribute("user", user);
             model.addAttribute("firstName", firstName);
             model.addAttribute("lastName", lastName);
