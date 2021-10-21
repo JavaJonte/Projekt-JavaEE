@@ -29,7 +29,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(Integer id) {
+    public void updateUser(Integer id,String firstName, String lastName, String email, String userName, String password) {
+        repo.findById(id)
+                .orElseThrow(()-> new IllegalStateException(
+                        "Användare med id " + id + " finns inte"
+                ));
+
     }
 
     @Override
