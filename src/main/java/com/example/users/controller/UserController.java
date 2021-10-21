@@ -1,10 +1,13 @@
 package com.example.users.controller;
 
+import com.example.users.model.User;
+import com.example.users.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import javax.ws.rs.POST;
 
 @Controller
 public class UserController {
@@ -44,31 +47,37 @@ public class UserController {
 
 
     }
-    @RequestMapping("/login")
-    public String checkLogin(@RequestParam(value = "user", required = false)String user,
-                             @RequestParam(value = "password", required = false)String password,
-                             Model model){
-
-            model.addAttribute("user", user);
-            model.addAttribute("password", password);
-
-
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String checkLogin(Model model){
+            model.addAttribute("users", new Users());
             return "login";
-
-
-
     }
-    @RequestMapping("/forgotPassword")
-    public String getPassword(){
+    @RequestMapping(value = "/login/accountManagement", method = RequestMethod.POST)
+    public String logOn(@ModelAttribute Users users, Model model){
+        model.addAttribute("users", users);
+    return "accountManagement";
+    }
+
+    @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
+    public String getPassword(Model model){
+        model.addAttribute("users", new Users());
         return "forgotPassword";
     }
-    @RequestMapping("/login/accountManagement")
-    public String showAccount(){
-        return "accountManagement";
+    @RequestMapping(value = "/forgotPassword/passRecovery", method = RequestMethod.POST)
+    public String postSent(@ModelAttribute Users users, Model model){
+        model.addAttribute("users", users);
+        return "passRecovery";
     }
-    @RequestMapping("/updateAccount")
-    public String updateAccount(){
+    @RequestMapping(value = "/updateAccount", method = RequestMethod.GET)
+    public String updateAccount(Model model){
+        model.addAttribute("users", new Users());
         return "updateAccount";
+    }
+
+    @RequestMapping(value = "/updateAccount/updated/accountManagement", method = RequestMethod.POST)
+    public String updated(@ModelAttribute Users users, Model model){
+        model.addAttribute("users", users);
+        return "accountManagement";
     }
 
 
