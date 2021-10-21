@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,20 +30,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
-    public void updateUser(Integer id,String firstName, String lastName, String email, String userName, String password) {
-        repo.findById(id)
-                .orElseThrow(()-> new IllegalStateException(
-                        "Användare med id " + id + " finns inte"
-                ));
-
-    }
-
-    @Override
     public void deleteUser(User user) {
         repo.delete(user);
     }
-
+    @Override
+    public void saveUser(User user) {
+        this.repo.save(user);
+    }
     @Override
     public List<User> getAllUsers() {
         return repo.findAll();

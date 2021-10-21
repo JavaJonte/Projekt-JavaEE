@@ -1,16 +1,21 @@
 package com.example.users.controller;
 
+import com.example.users.model.User;
+import com.example.users.service.UserService;
+import com.example.users.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UserController {
 
     @Autowired
     UserRepository repo;
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping("/")
     public String getIndex(@RequestParam(value = "id", required = false) Integer id, Model model) {
@@ -66,9 +71,20 @@ public class UserController {
     public String showAccount(){
         return "accountManagement";
     }
-    @RequestMapping("/updateAccount")
-    public String updateAccount(){
-        return "updateAccount";
+
+    @GetMapping("/updateUser/{id}")
+    public String updateUser(@PathVariable ( value = "id") Integer id, Model model){
+        User user = repo.getById(id);
+    // set employee as a model attribute to pre-populate the form
+		model.addAttribute("user", user);
+		return "updateUser";
+
+    }
+    @PostMapping("/saveUser")
+    public String saveUser(@ModelAttribute("user") User user) {
+        // save employee to database
+        userService.saveUser(user);
+        return "redirect:/";
     }
 
 
