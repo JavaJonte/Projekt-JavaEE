@@ -1,10 +1,14 @@
 package com.example.users.controller;
 
+import com.example.users.model.User;
 import com.example.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -38,5 +42,7 @@ public class UserController {
         System.out.println("GET ADMIN I LOG");
         return "admin.html";
     }
+
+
 
 }

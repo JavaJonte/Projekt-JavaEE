@@ -1,12 +1,15 @@
 package com.example.users;
 
+import com.example.users.controller.UserRepository;
 import com.example.users.model.User;
 import com.example.users.service.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackageClasses = UserRepository.class)
 public class UsersApplication {
 
     public static void main(String[] args) {
@@ -14,9 +17,9 @@ public class UsersApplication {
         UserService userService = context.getBean(UserService.class);
 
         // DEMO-OBJEKT
-        User test = new User("Hej", "Då", "email", "HDÅ","KOD");
-        User test2 = new User("Nästa", "Person", "annanepost", "anbat ","sa");
-        User test3 = new User("asdsad", "dgsaa", "da", "anbat ","sa");
+        User test = new User("USER", "Då", "email", "HDÅ","KOD", "USER",true);
+        User test2 = new User("USER", "Person", "annanepost", "anbat ","sa", "USER", true);
+        User test3 = new User("ADMIN", "dgsaa", "da", "test ","test", "ADMIN", true);
 
         // SKAPA DEMO-OBJEKT
         userService.createUser(test);
