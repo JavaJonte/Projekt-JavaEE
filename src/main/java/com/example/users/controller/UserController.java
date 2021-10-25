@@ -1,48 +1,118 @@
 package com.example.users.controller;
 
 import com.example.users.model.User;
+
 import com.example.users.service.UserService;
+import com.example.users.service.UserServiceImpl;
+
+import com.example.users.model.Users;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
+
+
+import javax.ws.rs.POST;
+
 
 @Controller
 public class UserController {
 
     @Autowired
-    UserService repo;
+    UserRepository repo;
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping("/")
-    public String getIndex() {
+    public String getIndex(@RequestParam(value = "id", required = false) Integer id, Model model) {
 
-        // VISAS I KONSOLL VARJE GÅNG SIDAN UPPDATERAS
-       // System.out.println(repo.getAllUsers());     // KÖR EN QUERY MOT DATABASEN OCH LOGGAR...
-        System.out.println("INDEX SYNS I LOGGEN?"); // ...DET, PLUS LISTAN PÅ ALLA ANVÄNDARE
-       // System.out.println(repo.getUserById(3));    // SKRIVER UT ID 3 I KONSOLL
-
-        return "index.html"; // RETURNERAR index.html (SKA SENARE BYTAS TILL MYACCOUNT)
+        System.out.println("SER VI DETTA I LOGGEN?");
+        model.addAttribute("id", id);
+        return "index";
     }
 
-    @RequestMapping("/user")
-    public String getUser() {
+    @RequestMapping("/createAccount")
+    public String postAccount(@RequestParam(value = "user", required = false) String user,
+                              @RequestParam(value = "firstName", required = false) String firstName,
+                              @RequestParam(value = "lastName", required = false)String lastName,
+                              @RequestParam(value = "email", required = false)String email,
+                              @RequestParam(value = "password", required = false)String password,
+                              @RequestParam(value = "rePassword", required = false)String rePassword,
+                              @RequestParam(value = "deletePassword", required = false)String deletePassword,
+                              Model model){
 
-        // VISAS I KONSOLL VARJE GÅNG SIDAN UPPDATERAS
-        System.out.println("GET USER I LOGGEN");
-      //  System.out.println(repo.getUserById(1));    // SKRIVER UT ID 1 I KONSOLL
 
-        return "user.html"; // RETURNERAR user.html
+            model.addAttribute("user", user);
+            model.addAttribute("firstName", firstName);
+            model.addAttribute("lastName", lastName);
+            model.addAttribute("email", email);
+            model.addAttribute("password", password);
+            model.addAttribute("rePassword", rePassword);
+            model.addAttribute("deletePassword", deletePassword);
+
+
+            return "createAccount";
+
+
+    }
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String checkLogin(Model model){
+            model.addAttribute("users", new Users());
+            return "login";
+    }
+    @RequestMapping(value = "/login/accountManagement", method = RequestMethod.POST)
+    public String logOn(@ModelAttribute Users users, Model model){
+        model.addAttribute("users", users);
+    return "accountManagement";
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String getAdmin() {
-        System.out.println("GET ADMIN I LOG");
-        return "admin.html";
+    @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
+    public String getPassword(Model model){
+        model.addAttribute("users", new Users());
+        return "forgotPassword";
+    }
+    @RequestMapping(value = "/forgotPassword/passRecovery", method = RequestMethod.POST)
+    public String postSent(@ModelAttribute Users users, Model model){
+        model.addAttribute("users", users);
+        return "passRecovery";
     }
 
+
+    @GetMapping("/updateUser/{id}")
+    public String updateUser(@PathVariable ( value = "id") Integer id, Model model){
+        User user = repo.getById(id);
+		model.addAttribute("user", user);
+		return "updateUser";
+
+    }
+    @PostMapping("/saveUser")
+    public String saveUser(@ModelAttribute("user") User user, RedirectAttributes ra) {
+        try {
+            repo.save(user);
+            ra.addFlashAttribute("message", "Användaren har uppdaterats");
+        }catch(Exception e){
+            ra.addFlashAttribute("message", e.getMessage());
+        }
+        return "redirect:/";
+
+    @RequestMapping(value = "/updateAccount", method = RequestMethod.GET)
+    public String updateAccount(Model model){
+        model.addAttribute("users", new Users());
+        return "updateAccount";
+
+    }
+
+    @RequestMapping(value = "/updateAccount/updated/accountManagement", method = RequestMethod.POST)
+    public String updated(@ModelAttribute Users users, Model model){
+        model.addAttribute("users", users);
+        return "accountManagement";
+    }
 
 
 }
