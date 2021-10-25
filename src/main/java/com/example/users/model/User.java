@@ -29,6 +29,6 @@ public class User {
     private String email;
     private String userName;
     private String password;
-    private boolean active = false;
+    private boolean active = true;
     private String roles = "ROLE_USER";
 }

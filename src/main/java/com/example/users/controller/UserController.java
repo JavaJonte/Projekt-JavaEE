@@ -9,12 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 
 @Controller
 public class UserController {
-
-    @Autowired
-    UserRepository repo;
 
     @Autowired
     UserService userService;
@@ -80,18 +79,18 @@ public class UserController {
 
     @GetMapping("/updateUser/{id}")
     public String updateUser(@PathVariable ( value = "id") Integer id, Model model){
-        User user = repo.getById(id);
+        User user = userService.getUserById(id);
 		model.addAttribute("user", user);
 		return "updateUser";
 
     }
 
-
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") User user, RedirectAttributes ra) {
         try {
-            repo.save(user);
+            userService.createUser(user);
             ra.addFlashAttribute("message", "Användaren har uppdaterats");
+
         } catch (Exception e) {
             ra.addFlashAttribute("message", e.getMessage());
         }
@@ -109,6 +108,19 @@ public class UserController {
     public String updated(@ModelAttribute Users users, Model model){
         model.addAttribute("users", users);
         return "accountManagement";
+    }
+
+
+
+
+    // ADMIN FEELING
+    // TODO Se över om nedan ska ligga i samma fil eller om den skall flyttas ut..
+
+    @GetMapping("/users")
+    public String showUserList(Model model){
+        List<User> listUsers = userService.getAllUsers();
+        model.addAttribute("listUsers", listUsers);
+        return "userList";
     }
 
 
