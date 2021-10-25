@@ -15,12 +15,13 @@ import javax.persistence.Id;
 
 @Entity(name = "User")
 public class User {
-    public User(String firstName, String lastName, String email, String userName, String password) {
+    public User(String firstName, String lastName, String email, String userName, String password, String secret) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.userName = userName;
         this.password = password;
+        this.secret = secret;
     }
 
     @Id
@@ -31,4 +32,8 @@ public class User {
     private String email;
     private String userName;
     private String password;
+    private String rePassword;
+    private String oldPassword;
+    private String secret;
+
 }
