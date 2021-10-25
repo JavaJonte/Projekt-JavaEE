@@ -1,6 +1,10 @@
+/*
+CSS FOR CREATE ACCOUNT PAGE
+*/
 * {
     box-sizing: border-box;
 }
+
 header {
     background-color: #666;
     padding: 5px;
