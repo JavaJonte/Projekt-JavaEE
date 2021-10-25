@@ -1,7 +1,6 @@
 package com.example.users.model;
 
 import lombok.*;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,9 +11,9 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @ToString
 
-
 @Entity(name = "User")
 public class User {
+
     public User(String firstName, String lastName, String email, String userName, String password, String secret) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,8 +21,8 @@ public class User {
         this.userName = userName;
         this.password = password;
         this.secret = secret;
-        this.roles = "ROLE_ADMIN";
-            }
+        this.roles = "ROLE_ADMIN"; // TODO Hårdkodad för tillfället, denna skall senare endast kunna ställas in av admin rollen.
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,7 +35,6 @@ public class User {
     private String rePassword;
     private String oldPassword;
     private String secret;
-    private boolean active = true;
+    private boolean active = true; // TODO Hårdkodad för tillfället, skall ställas in av admin eller via bekräftelse mail.
     private String roles;
-
 }

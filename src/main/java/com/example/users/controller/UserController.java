@@ -7,12 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 
 @Controller
 public class UserController {
-
 
 
     @Autowired
@@ -28,9 +26,9 @@ public class UserController {
     public String postAccount(Model model)
     {
         model.addAttribute("user", new User());
-            return "createAccount";
+        return "createAccount";
     }
-    @RequestMapping(value = "/login/home", method = RequestMethod.POST)
+    @RequestMapping(value = "/login/home", method = RequestMethod.POST) // TODO se över endpointen
     public String saveToDB(@ModelAttribute User user, RedirectAttributes ra, Model model)
     {
         model.addAttribute("user", user);
@@ -42,17 +40,17 @@ public class UserController {
         }
         return "accountManagement";
     }
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String checkLogin(Model model)
-    {
-            model.addAttribute("user", new User());
-            return "login";
-    }
-    @RequestMapping(value = "/login/accountManagement", method = RequestMethod.POST)
+    //    @RequestMapping(value = "/login", method = RequestMethod.GET)
+//    public String checkLogin(Model model)
+//    {
+//            model.addAttribute("user", new User());
+//            return "login";
+//    }
+    @RequestMapping(value = "/myAccount", method = RequestMethod.POST) // TODO se över endpointen samt ovanstående metod (går att slå ihop?)
     public String logOn(@ModelAttribute User user, Model model)
     {
         model.addAttribute("user", user);
-    return "accountManagement";
+        return "accountManagement";
     }
 
     @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
@@ -68,11 +66,11 @@ public class UserController {
     }
 
 
-    @GetMapping("/updateUser/{id}")
+    @GetMapping("/users/updateUser/{id}")
     public String updateUser(@PathVariable ( value = "id") Integer id, Model model){
         User user = userService.getUserById(id);
-		model.addAttribute("user", user);
-		return "updateUser";
+        model.addAttribute("user", user);
+        return "updateUser";
 
     }
     @PostMapping("/saveUser")
@@ -92,13 +90,12 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/updateAccount/updated/accountManagement", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateAccount/updated/accountManagement", method = RequestMethod.POST) // TODO se över endpointen
     public String updated(@ModelAttribute User user, Model model){
         model.addAttribute("user", user);
         return "accountManagement";
     }
 
-    // ADMIN FEELING
     // TODO Se över om nedan ska ligga i samma fil eller om den skall flyttas ut..
 
     @GetMapping("/users")
@@ -107,5 +104,4 @@ public class UserController {
         model.addAttribute("listUsers", listUsers);
         return "userList";
     }
-
 }
