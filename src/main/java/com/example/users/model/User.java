@@ -1,7 +1,6 @@
 package com.example.users.model;
 
 import lombok.*;
-
 import javax.persistence.*;
 
 @Getter
@@ -12,14 +11,14 @@ import javax.persistence.*;
 @Entity(name = "user")
 public class User {
 
-    public User(String firstName, String lastName, String email, String userName, String password, String roles, boolean active) {
+    public User(String firstName, String lastName, String email, String userName, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.userName = userName;
         this.password = password;
-        this.active = active;
-        this.roles = roles;
+
+
     }
 
     @Id
@@ -30,6 +29,6 @@ public class User {
     private String email;
     private String userName;
     private String password;
-    private boolean active;
-    private String roles;
+    private boolean active = false;
+    private String roles = "ROLE_USER";
 }
