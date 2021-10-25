@@ -1,7 +1,7 @@
 package com.example.users.security;
 
+import com.example.users.controller.UserRepository;
 import com.example.users.model.User;
-import com.example.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,17 +11,16 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserDetailService implements UserDetailsService {
+public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
-    UserService userService;
+    UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-      Optional<User> user = userService.findByUserName(userName);
+        Optional<User> user = userRepository.findUserByUserName(userName);
 
-      user.orElseThrow(() -> new UsernameNotFoundException("Not Found " + userName));
-
-      return user.map(MyUserDetails::new).get();
+        user.orElseThrow(() -> new UsernameNotFoundException ("Not found " + userName));
+        return user.map(MyUserDetails::new).get();
     }
 }

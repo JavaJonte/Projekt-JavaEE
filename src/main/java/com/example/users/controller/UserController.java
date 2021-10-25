@@ -3,8 +3,6 @@ package com.example.users.controller;
 import com.example.users.model.User;
 
 import com.example.users.service.UserService;
-import com.example.users.service.UserServiceImpl;
-
 import com.example.users.model.Users;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,10 +94,11 @@ public class UserController {
         try {
             repo.save(user);
             ra.addFlashAttribute("message", "Användaren har uppdaterats");
-        }catch(Exception e){
+        } catch (Exception e) {
             ra.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/";
+    }
 
     @RequestMapping(value = "/updateAccount", method = RequestMethod.GET)
     public String updateAccount(Model model){
