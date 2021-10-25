@@ -22,7 +22,8 @@ public class User {
         this.userName = userName;
         this.password = password;
         this.secret = secret;
-    }
+        this.roles = "ROLE_ADMIN";
+            }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,5 +36,7 @@ public class User {
     private String rePassword;
     private String oldPassword;
     private String secret;
+    private boolean active = true;
+    private String roles;
 
 }

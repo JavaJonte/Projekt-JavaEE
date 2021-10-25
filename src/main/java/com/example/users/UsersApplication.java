@@ -14,9 +14,9 @@ public class UsersApplication {
         UserService userService = context.getBean(UserService.class);
 
         // DEMO-OBJEKT
-        User test = new User("Hej", "Då", "email", "HDÅ","KOD", "hemligt");
+        User test = new User("Hej", "Då", "email", "test","test", "hemligt");
         User test2 = new User("Nästa", "Person", "annanepost", "anbat ","sa", "wtf");
-        User test3 = new User("asdsad", "dgsaa", "da", "anbat ","sa", "odd");
+        User test3 = new User("asdsad", "dgsaa", "da", "admin","admin", "odd");
 
         // SKAPA DEMO-OBJEKT
         userService.createUser(test);
