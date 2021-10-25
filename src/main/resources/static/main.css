@@ -31,6 +31,10 @@ section:after {
     display: table;
     clear: both;
 }
+
+#products-main-content {
+    text-align: center;
+    }
 footer {
     background-color: #777;
     padding: 10px;
