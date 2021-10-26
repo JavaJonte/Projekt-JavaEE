@@ -99,19 +99,20 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/u/myAccount", method = RequestMethod.POST) // TODO se över endpointen
-    public String updated(@ModelAttribute User user, Model model){
-        try{
-            userService.saveUser(user);
-        }catch (UserNameExistException e){
-            System.out.println(e);
-        }
+    //@RequestMapping(value = "/u/myAccount", method = RequestMethod.POST) // TODO se över endpointen
+    //public String updated(@ModelAttribute User user, Model model){
+    //   model.addAttribute("user", user);
+    //  try{
+    //      userService.saveUser(user);
+    //  }catch (UserNameExistException e){
+    //     System.out.println(e);
+    // }
 
         //User thisUser = userService.findUser(user);
         //model.addAttribute("thisUser", thisUser);
 
-        return "accountManagement";
-    }
+    //   return "accountManagement";
+    //}
 
     // TODO Se över om nedan ska ligga i samma fil eller om den skall flyttas ut..
 
