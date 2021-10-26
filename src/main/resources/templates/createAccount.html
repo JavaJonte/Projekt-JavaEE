@@ -12,8 +12,10 @@
                                                )}">
 
 <head>
-    <title>Create Account</title>
-
+    <title>Title of Products Page</title>
+    <th:block id="products-static-resources">
+        <script type="text/javascript" src="../static/products.js" th:src="@{/products.js}"></script>
+    </th:block>
 </head>
 <body>
 <div id="products-header">
@@ -23,32 +25,32 @@
     Nav
 </div>
 <div id="products-main-content">
-    <h2>Create New Account</h2>
+    <h2>Create Account</h2>
     <form th:action="@{/login/home}" th:object="${user}" method="post">
-        <label> User name:
+        <label> *user name:
             <input type="text" th:field="*{userName}">
         </label>
-        </br>
-        <label>First Name:
+        <br>
+        <label>*Name:
             <input type="text" th:field="*{firstName}">
         </label>
-        </br>
-        <label>Last Name:
+        <label>*Lastname:
             <input type="text" th:field="*{lastName}">
         </label>
-        </br>
-        <label>Password:
+        <br>
+        <label>*Password:
             <input type="password" th:field="*{password}">
         </label>
-        </br>
-        <label>Re-type password:
+        <label>*Re-password:
             <input type="password" th:field="*{rePassword}">
         </label>
-        </br>
-        <label>Mother's first name?:
+        <br>
+        <label>*Secret answer:
             <input type="text" th:field="*{secret}">
         </label>
-        </br>
+        <p>*Secret answer, is a safe word for the user to be able to delete the account</p>
+        <p>(*) is a required field</p>
+        <br>
         <input type="submit" value="submit">
     </form>
 </div>
