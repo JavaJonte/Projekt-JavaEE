@@ -25,8 +25,11 @@
     Home Nav
 </div>
 <div id="home-main-content">
-    <p th:text="'userName:' + ${user.userName}"></p>
-    <p th:text="'password:' + ${user.password}"></p>
+    <p th:text="'Name:' + ${user.firstName}"></p>
+    <br>
+    <p th:text="'Lastname:' + ${user.lastName}"></p>
+    <br>
+    <p th:text="'Email:' +${user.email}"></p>
 </div>
 <div id="home-footer" th:replace="~{/fragments/app-fragments :: copyright}">
     Footer
