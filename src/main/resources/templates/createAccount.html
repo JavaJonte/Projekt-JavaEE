@@ -27,7 +27,7 @@
 <div id="products-main-content">
     <h2>Create Account</h2>
     <form th:action="@{/login/home}" th:object="${user}" method="post">
-        <label> user name:
+        <label> *user name:
             <input type="text" th:field="*{userName}">
         </label>
         <br>
