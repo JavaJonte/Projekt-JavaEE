@@ -27,28 +27,26 @@
 <div id="home-main-content">
     <h2>Update here</h2>
     <form th:action="@{/updateAccount/updated/accountManagement}" th:object="${user}" method="post">
-        <label> userNick:
-            <input type="text" th:field="*{userName}">
-        </label>
-        <label>firstName:
+        <label>Name:
             <input type="text" th:field="*{firstName}">
         </label>
-        <label>lastName:
+        <label>Lastname:
             <input type="text" th:field="*{lastName}">
         </label>
-        <label>oldPassword:
+        <br>
+        <label>*Current Password:
             <input type="password" th:field="*{oldPassword}">
         </label>
-        <label>password:
+        <label>New password:
             <input type="password" th:field="*{password}">
         </label>
-        <label>re-password:
+        <label>Re-new-password:
             <input type="password" th:field="*{rePassword}">
         </label>
-        <label>What's your mother's name?:
-            <input type="text" th:field="*{secret}">
-        </label>
+        <br>
         <input type="submit" value="submit">
+        <br>
+        <p>(*) is a required field</p>
     </form>
 </div>
 <div id="home-footer" th:replace="~{/fragments/app-fragments :: copyright}">
