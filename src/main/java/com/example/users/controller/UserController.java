@@ -68,7 +68,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/updateUser/{id}")
+    @GetMapping("users/updateUser/{id}")
     public String updateUser(@PathVariable ( value = "id") Integer id, Model model){
         User user = userService.getUserById(id);
 		model.addAttribute("user", user);
@@ -83,13 +83,21 @@ public class UserController {
         } catch (Exception e) {
             ra.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/";
+        return "redirect:/users";
     }
+
+
     @RequestMapping(value = "/updateAccount", method = RequestMethod.GET)
     public String updateAccount(Model model){
         model.addAttribute("user", new User());
         return "updateAccount";
 
+    }
+    @GetMapping("users/delete/{id}")
+    public String deleteUser(@PathVariable("id")Integer id, RedirectAttributes ra) {
+        userService.delete(id);
+        ra.addFlashAttribute("message", "User " + id + " Is Deleted");
+        return "redirect:/users";
     }
 
     @RequestMapping(value = "/updateAccount/updated/accountManagement", method = RequestMethod.POST)
