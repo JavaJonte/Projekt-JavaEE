@@ -10,7 +10,7 @@ public interface UserService {
 
     void createUser(User user);
     User getUserById(Integer id);
-    void deleteUser(User user);
+    void delete(Integer id);
     void saveUser(User user) throws UserNameExistException;
     List<User> getAllUsers();
 }
