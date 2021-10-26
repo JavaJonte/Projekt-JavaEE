@@ -16,8 +16,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(User user) {
+        Optional<User> u = repo.findUserByUserName(user.getUserName());
+        if (!u.isPresent())
         repo.save(user);
-        System.out.println("USER NOW SAVED TO DB");
+        else {
+            System.out.println("UPPTAGET!");
+        }
+
     }
 
     @Override
@@ -37,7 +42,7 @@ public class UserServiceImpl implements UserService {
         if(userOptional.isPresent()){
             throw new UserNameExistException("Användarnamnet är upptaget");
         } else {
-            this.repo.save(user);
+            repo.save(user);
         }
     }
 
