@@ -5,7 +5,6 @@ import com.example.users.security.MyUserDetails;
 import com.example.users.security.MyUserDetailsService;
 import com.example.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,19 +47,22 @@ public class UserController {
         //model.addAttribute("thisUser", thisUser);
         return "accountManagement";
     }
-    // @RequestMapping(value = "/login", method = RequestMethod.GET)
-    // public String checkLogin(Model model)
-    // {
-    //     System.out.println("kan jag se detta");
-    //       model.addAttribute("user", new User());
-    //        return "login";
-    // }
-    @RequestMapping(value = "/myAccount", method = RequestMethod.GET) // TODO se över endpointen samt ovanstående metod (går att slå ihop?)
+     @RequestMapping(value = "/loginCustom", method = RequestMethod.GET)
+     public String checkLogin(Model model)
+     {
+         System.out.println("kan jag se detta");
+           model.addAttribute("user", new User());
+            return "loginCustomized";
+     }
+    @RequestMapping(value = "/myAccount", method = RequestMethod.POST) // TODO se över endpointen samt ovanstående metod (går att slå ihop?)
     public String logOn(@ModelAttribute User thisUser, Model model)
     {
+        System.out.println("PrintLINE: "+ thisUser.getUserName());
         Optional<User> u = userService.getUserByUserName(thisUser.getUserName());
+        System.out.println(u);
+        System.out.println("EN PRINTLINE MATHILDA TEST" + u.get().toString());
         //User thisUser = userService.findUser(user);
-        model.addAttribute("thisUser", u.get());
+        model.addAttribute("user", u.get());
         return "accountManagement";
     }
 
