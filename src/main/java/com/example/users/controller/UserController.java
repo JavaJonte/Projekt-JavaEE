@@ -36,15 +36,17 @@ public class UserController {
     @RequestMapping(value = "/c/myAccount", method = RequestMethod.POST) // TODO se över endpointen
     public String saveToDB(@ModelAttribute User user, RedirectAttributes ra, Model model)
     {
-        model.addAttribute("user", user);
+       // model.addAttribute("user", user);
         try {
             userService.createUser(user);
             ra.addFlashAttribute("message", "User created");
         } catch (Exception e) {
             ra.addFlashAttribute("message", e.getMessage());
         }
+
+        User testar = userService.getUserById(user.getId());
         //User thisUser = userService.findUser(user);
-        //model.addAttribute("thisUser", thisUser);
+        model.addAttribute("user", testar);
         return "accountManagement";
     }
     // @RequestMapping(value = "/login", method = RequestMethod.GET)
