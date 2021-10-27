@@ -5,7 +5,6 @@ import com.example.users.security.MyUserDetails;
 import com.example.users.security.MyUserDetailsService;
 import com.example.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -61,6 +60,7 @@ public class UserController {
         Optional<User> u = userService.getUserByUserName(thisUser.getUserName());
         //User thisUser = userService.findUser(user);
         model.addAttribute("thisUser", u.get());
+
         return "accountManagement";
     }
 
@@ -92,7 +92,7 @@ public class UserController {
         } catch (Exception e) {
             ra.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/";
+        return "redirect:/users";
     }
     @RequestMapping(value = "/updateAccount", method = RequestMethod.GET)
     public String updateAccount(Model model){

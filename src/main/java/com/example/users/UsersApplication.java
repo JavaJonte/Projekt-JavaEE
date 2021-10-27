@@ -18,6 +18,7 @@ public class UsersApplication {
         User test2 = new User("Nästa", "Person", "annanepost", "anbat ", "sa", "wtf");
         User test3 = new User("asdsad", "dgsaa", "da", "admin", "admin", "odd");
 
+        test3.setAdmin(true);
         // SKAPA DEMO-OBJEKT
         userService.createUser(test);
         userService.createUser(test2);
