@@ -40,13 +40,14 @@ public class UserController {
         try {
             userService.createUser(user);
             ra.addFlashAttribute("message", "User created");
+            User testar = userService.getUserById(user.getId());
+            //User thisUser = userService.findUser(user);
+            model.addAttribute("user", testar); // Tar ut objektet ur databasen baserat på id ovan.
+
         } catch (Exception e) {
             ra.addFlashAttribute("message", e.getMessage());
         }
 
-        User testar = userService.getUserById(user.getId());
-        //User thisUser = userService.findUser(user);
-        model.addAttribute("user", testar);
         return "accountManagement";
     }
     // @RequestMapping(value = "/login", method = RequestMethod.GET)

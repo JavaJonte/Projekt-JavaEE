@@ -20,6 +20,7 @@ public class UsersApplication {
 
         test3.setAdmin(true);
         // SKAPA DEMO-OBJEKT
+        test.setRoles("ROLE_USER");
         userService.createUser(test);
         userService.createUser(test2);
         userService.createUser(test3);

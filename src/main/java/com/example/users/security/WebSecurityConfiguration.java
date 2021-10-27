@@ -29,7 +29,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users").hasRole("ADMIN")
                 .antMatchers("/myAccount").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/").permitAll()
-                .and().formLogin().defaultSuccessUrl("/myAccount", true);
+                .and().formLogin().defaultSuccessUrl("/", true);
     }
 
     @Bean

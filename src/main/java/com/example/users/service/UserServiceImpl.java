@@ -5,6 +5,8 @@ import com.example.users.controller.UserRepository;
 import com.example.users.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityExistsException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,9 +20,9 @@ public class UserServiceImpl implements UserService {
     public void createUser(User user) {
         Optional<User> u = repo.findUserByUserName(user.getUserName());
         if (!u.isPresent())
-        repo.save(user);
+            repo.save(user);
         else {
-            System.out.println("UPPTAGET!");
+            throw new EntityExistsException();
         }
 
     }
