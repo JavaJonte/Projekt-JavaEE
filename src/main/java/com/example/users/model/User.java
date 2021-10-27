@@ -22,11 +22,11 @@ public class User {
         this.roles = roles;
     }
 
-    public User(boolean admin, String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-        this.admin = admin;
-    }
+//    public User(String userName, String password) {
+//        this.userName = userName;
+//        this.password = password;
+//    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,6 +54,6 @@ public class User {
     private boolean active = true; // TODO Hårdkodad för tillfället, skall ställas in av admin eller via bekräftelse mail.
     @Column(length = 15, nullable = false)
     private String roles; // TODO Hårdkodad för tillfället, denna skall senare endast kunna ställas in av admin rollen.
-    private boolean admin;
+
     //ROLE_ADMIN
 }
