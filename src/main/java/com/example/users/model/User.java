@@ -12,13 +12,14 @@ import javax.persistence.*;
 @Entity(name = "User")
 public class User {
 
-    public User(String firstName, String lastName, String email, String userName, String password, String secret) {
+    public User(String firstName, String lastName, String email, String userName, String password, String secret, String roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.userName = userName;
         this.password = password;
         this.secret = secret;
+        this.roles = roles;
     }
 
     public User(boolean admin, String userName, String password) {
@@ -52,6 +53,7 @@ public class User {
 
     private boolean active = true; // TODO Hårdkodad för tillfället, skall ställas in av admin eller via bekräftelse mail.
     @Column(length = 15, nullable = false)
-    private String roles = "ROLE_ADMIN"; // TODO Hårdkodad för tillfället, denna skall senare endast kunna ställas in av admin rollen.
+    private String roles; // TODO Hårdkodad för tillfället, denna skall senare endast kunna ställas in av admin rollen.
     private boolean admin;
+    //ROLE_ADMIN
 }

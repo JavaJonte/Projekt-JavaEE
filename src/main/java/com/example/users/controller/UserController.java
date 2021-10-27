@@ -37,15 +37,18 @@ public class UserController {
     public String saveToDB(@ModelAttribute User user, RedirectAttributes ra, Model model)
     {
         model.addAttribute("user", user);
+
         try {
             userService.createUser(user);
             ra.addFlashAttribute("message", "User created");
-        } catch (Exception e) {
+            return "accountManagement";
+        } catch (UserNameExistException e) {
             ra.addFlashAttribute("message", e.getMessage());
+            return "redirect:/createAccount";
         }
         //User thisUser = userService.findUser(user);
         //model.addAttribute("thisUser", thisUser);
-        return "accountManagement";
+
     }
     // @RequestMapping(value = "/login", method = RequestMethod.GET)
     // public String checkLogin(Model model)
@@ -58,10 +61,16 @@ public class UserController {
     public String logOn(@ModelAttribute User thisUser, Model model)
     {
         Optional<User> u = userService.getUserByUserName(thisUser.getUserName());
+        if(u.isPresent()){
+            model.addAttribute("thisUser", u.get());
+            return "accountManagement";
+        }else {
+            return "redirect:/login";
+        }
         //User thisUser = userService.findUser(user);
-        model.addAttribute("thisUser", u.get());
 
-        return "accountManagement";
+
+
     }
 
     //     @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
@@ -89,7 +98,7 @@ public class UserController {
         try {
             userService.createUser(user);
             ra.addFlashAttribute("message", "Användaren har uppdaterats");
-        } catch (Exception e) {
+        } catch (UserNameExistException e) {
             ra.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/users";

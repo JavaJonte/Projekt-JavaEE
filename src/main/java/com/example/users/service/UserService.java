@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    void createUser(User user);
+    void createUser(User user) throws UserNameExistException;
     User getUserById(Integer id);
     void delete(Integer id);
     void saveUser(User user) throws UserNameExistException;
