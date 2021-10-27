@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -57,8 +58,9 @@ public class UserController {
     @RequestMapping(value = "/myAccount", method = RequestMethod.GET) // TODO se över endpointen samt ovanstående metod (går att slå ihop?)
     public String logOn(@ModelAttribute User thisUser, Model model)
     {
+        Optional<User> u = userService.getUserByUserName(thisUser.getUserName());
         //User thisUser = userService.findUser(user);
-        model.addAttribute("thisUser", thisUser);
+        model.addAttribute("thisUser", u.get());
         return "accountManagement";
     }
 

@@ -14,4 +14,5 @@ public interface UserService {
     void delete(Integer id);
     void saveUser(User user) throws UserNameExistException;
     List<User> getAllUsers();
+    Optional<User> getUserByUserName(String userName);
 }

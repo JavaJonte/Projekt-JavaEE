@@ -21,7 +21,6 @@ public class User {
         this.userName = userName;
         this.password = password;
         this.secret = secret;
-        this.roles = "ROLE_ADMIN"; // TODO Hårdkodad för tillfället, denna skall senare endast kunna ställas in av admin rollen.
     }
 
     public User(boolean admin, String userName, String password) {
@@ -44,6 +43,6 @@ public class User {
     private String oldPassword;
     private String secret;
     private boolean active = true; // TODO Hårdkodad för tillfället, skall ställas in av admin eller via bekräftelse mail.
-    private String roles;
+    private String roles = "ROLE_ADMIN"; // TODO Hårdkodad för tillfället, denna skall senare endast kunna ställas in av admin rollen.
     private boolean admin;
 }
