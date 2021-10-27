@@ -14,9 +14,9 @@ public class UsersApplication {
         UserService userService = context.getBean(UserService.class);
 
         // DEMO-OBJEKT
-        User test = new User("Hej", "Då", "email", "HDÅ","KOD");
-        User test2 = new User("Nästa", "Person", "annanepost", "anbat ","sa");
-        User test3 = new User("asdsad", "dgsaa", "da", "anbat ","sa");
+        User test = new User("Hej", "Då", "email", "test", "test", "hemligt");
+        User test2 = new User("Nästa", "Person", "annanepost", "anbat ", "sa", "wtf");
+        User test3 = new User("asdsad", "dgsaa", "da", "admin", "admin", "odd");
 
         // SKAPA DEMO-OBJEKT
         userService.createUser(test);
@@ -30,7 +30,7 @@ public class UsersApplication {
         System.out.println(userService.getAllUsers());
 
         // TEST DELETE
-        System.out.println(userService.deleteUser(test2));
+
 
         // TEST LISTA IGEN
         System.out.println(userService.getAllUsers());
@@ -38,14 +38,8 @@ public class UsersApplication {
         // TEST GET ONE
         System.out.println(userService.getUserById(1));
 
-
+        //UPPDATERA USER
 
 
     }
-
-
-
-
-
 }
-

@@ -16,6 +16,7 @@
         <script type="text/javascript" src="../static/home.js" th:src="@{/home.js}"></script>
         <link rel="stylesheet" type="text/css" href="../static/home.css" th:href="@{/home.css}"/>
     </th:block>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
 <div id="home-header">
@@ -26,29 +27,39 @@
 </div>
 <div id="home-main-content">
     <h2>Update here</h2>
-    <form th:action="@{/updateAccount/updated/accountManagement}" th:object="${users}" method="post">
-        <label> userNick:
-            <input type="text" th:field="*{userName}">
-        </label>
-        <label>firstName:
-            <input type="text" th:field="*{firstName}">
-        </label>
-        <label>lastName:
-            <input type="text" th:field="*{lastName}">
-        </label>
-        <label>oldPassword:
-            <input type="password" th:field="*{oldPassword}">
-        </label>
-        <label>password:
-            <input type="password" th:field="*{password}">
-        </label>
-        <label>re-password:
-            <input type="password" th:field="*{rePassword}">
-        </label>
-        <label>What's your mother's name?:
-            <input type="text" th:field="*{secret}">
-        </label>
-        <input type="submit" value="submit">
+    <form th:action="@{/c/myAccount}" th:object="${user}" method="post"
+        style="max-width: 500px; margin: 0 auto;">
+        <div class="border border-secondary rounded p-3">
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">E-mail:</label>
+                <div class="col-sm-8">
+                    <input type="email" th:field="*{email}" class="form-control" required minlength="8" maxlength="45"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">First Name:</label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{firstName}" class="form-control" required minlength="2" maxlength="45" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Last Name:</label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{lastName}" class="form-control" required minlength="2" maxlength="45"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Password:</label>
+                <div class="col-sm-8">
+                    <input type="password" th:field="*{password}" class="form-control" required minlength="5" maxlength="15"/>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary m-2">Save</button>
+                <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Cancel</button>
+            </div>
+        </div>
+
     </form>
 </div>
 <div id="home-footer" th:replace="~{/fragments/app-fragments :: copyright}">
