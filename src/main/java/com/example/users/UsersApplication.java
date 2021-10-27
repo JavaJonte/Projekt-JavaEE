@@ -14,33 +14,17 @@ public class UsersApplication {
         UserService userService = context.getBean(UserService.class);
 
         // DEMO-OBJEKT
-        User test = new User("Hej", "Då", "email", "test", "test", "hemligt");
-        User test2 = new User("Nästa", "Person", "annanepost", "anbat ", "sa", "wtf");
-        User test3 = new User("asdsad", "dgsaa", "da", "admin", "admin", "odd");
-
-        test3.setAdmin(true);
-        // SKAPA DEMO-OBJEKT
-        test.setRoles("ROLE_USER");
-        userService.createUser(test);
-        userService.createUser(test2);
-        userService.createUser(test3);
+        User test = new User("Boss", "Man", "email@email.com", "admin", "admin", "hemligt");
+        // MODIFIERA DEMO-OBJEKT
+        test.setAdmin(true); // Sätter objektet till admin
+        test.setActive(true); // Sätter objektet till aktiv
+        userService.createUser(test); // Sparar objekt i databas
 
         // TESTUTSKRIFT
-        System.out.println("DETTA SKRIVS EFTER TILLAGT");
+        System.out.println("OBJEKTET OVAN HAR LAGTS TILL I DATABASEN");
 
         //TESTUTSKRIFT LISTA
         System.out.println(userService.getAllUsers());
-
-        // TEST DELETE
-
-
-        // TEST LISTA IGEN
-        System.out.println(userService.getAllUsers());
-
-        // TEST GET ONE
-        System.out.println(userService.getUserById(1));
-
-        //UPPDATERA USER
 
 
     }
