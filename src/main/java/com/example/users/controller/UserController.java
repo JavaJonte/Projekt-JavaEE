@@ -116,7 +116,9 @@ public class UserController {
     //   return "accountManagement";
     //}
 
+
     // TODO Se över om nedan ska ligga i samma fil eller om den skall flyttas ut..
+    // ADMIN INLOGGAD
 
     @GetMapping("/users")
     public String showUserList(Model model){
@@ -124,4 +126,14 @@ public class UserController {
         model.addAttribute("listUsers", listUsers);
         return "userList";
     }
+
+    @GetMapping("/users/delete/{id}")
+    public String deleteUser(@PathVariable("id") Integer id, RedirectAttributes ra){
+        userService.delete(id);
+        ra.addFlashAttribute("message", "Anvädaren med ID: " + id + " har raderats");
+
+        return "redirect:/users";
+    }
+
+
 }
