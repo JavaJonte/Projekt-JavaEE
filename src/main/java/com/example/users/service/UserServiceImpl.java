@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -46,7 +45,6 @@ public class UserServiceImpl implements UserService {
             repo.save(user);
         }
     }
-
 
     @Override
     public List<User> getAllUsers() {
