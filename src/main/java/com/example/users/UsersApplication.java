@@ -10,18 +10,18 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class UsersApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UserNameExistException {
         ConfigurableApplicationContext context = SpringApplication.run(UsersApplication.class, args);
         UserService userService = context.getBean(UserService.class);
 
         // DEMO-OBJEKT
-        //User test = new User("HejHejHejHejHej", "DåHejHejHejHej", "email@email.se", "test", "test", "hemligt");
+        User test = new User("HejHejHejHejHej", "DåHejHejHejHej", "email@email.se", "test", "test", "hemligt", "ROLE_ADMIN");
         //User test2 = new User("NästaHejHejHej", "PersonHejHejHej", "emu@email.co", "Douglas ", "HejHejHejHej", "wtf");
         //User test3 = new User("asdsadHejHejHej", "dgsaaHejHej", "kiwi@email.org", "Viktor", "admin", "odd");
 
         //test3.setAdmin(true);
         // SKAPA DEMO-OBJEKT
-        //userService.createUser(test);
+        userService.createUser(test);
         //userService.createUser(test2);
         //userService.createUser(test3);
 

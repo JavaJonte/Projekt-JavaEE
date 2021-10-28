@@ -9,6 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.FormParam;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,8 +45,10 @@ public class UserController {
         try {
             userService.createUser(user);
             ra.addFlashAttribute("message", "User created");
+            Thread.sleep(5000);
+
             return "accountManagement";
-        } catch (UserNameExistException e) {
+        } catch (UserNameExistException | InterruptedException e) {
             ra.addFlashAttribute("message", e.getMessage());
             return "redirect:/createAccount";
         }
@@ -58,11 +64,14 @@ public class UserController {
     //        return "login";
     // }
     @RequestMapping(value = "/myAccount", method = RequestMethod.GET) // TODO se över endpointen samt ovanstående metod (går att slå ihop?)
-    public String logOn(@ModelAttribute User thisUser, Model model)
+    public String logOn(@ModelAttribute User user, Model model, HttpServletRequest request)
     {
-        Optional<User> u = userService.getUserByUserName(thisUser.getUserName());
+        Principal principal = request.getUserPrincipal();
+        System.out.println("SNÄLLLLLA" + principal.getName());
+        Optional<User> u = userService.getUserByUserName(principal.getName());
+        System.out.println("ÄR DETTTA VÅR ANVÄNDARE?? " + u.get().toString());
         if(u.isPresent()){
-            model.addAttribute("thisUser", u.get());
+            model.addAttribute("user", u.get());
             return "accountManagement";
         }else {
             return "redirect:/login";
