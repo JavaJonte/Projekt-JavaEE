@@ -7,6 +7,7 @@ import com.example.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
@@ -33,7 +34,7 @@ public class UserController {
         model.addAttribute("user", new User());
         return "createAccount";
     }
-    @RequestMapping(value = "/c/myAccount", method = RequestMethod.POST) // TODO se över endpointen
+    @RequestMapping(value = "/c/myAccount", method = RequestMethod.GET) // TODO se över endpointen
     public String saveToDB(@ModelAttribute User user, RedirectAttributes ra, Model model)
     {
         model.addAttribute("user", user);
@@ -47,22 +48,23 @@ public class UserController {
         //model.addAttribute("thisUser", thisUser);
         return "accountManagement";
     }
-     @RequestMapping(value = "/loginCustom", method = RequestMethod.GET)
+     @RequestMapping(value = "/login", method = RequestMethod.GET)
      public String checkLogin(Model model)
      {
          System.out.println("kan jag se detta");
            model.addAttribute("user", new User());
-            return "loginCustomized";
+            return "login";
      }
-    @RequestMapping(value = "/myAccount", method = RequestMethod.POST) // TODO se över endpointen samt ovanstående metod (går att slå ihop?)
-    public String logOn(@ModelAttribute User thisUser, Model model)
+
+    @RequestMapping(value = "/myAccount", method = RequestMethod.GET) // TODO se över endpointen samt ovanstående metod (går att slå ihop?)
+    public String logOn(@ModelAttribute("user") User user, Model model)
     {
-        System.out.println("PrintLINE: "+ thisUser.getUserName());
-        Optional<User> u = userService.getUserByUserName(thisUser.getUserName());
-        System.out.println(u);
-        System.out.println("EN PRINTLINE MATHILDA TEST" + u.get().toString());
-        //User thisUser = userService.findUser(user);
-        model.addAttribute("user", u.get());
+        System.out.println("wtf!!!!!"+user.getUserName());
+//        Optional<User> u = userService.getUserByUserName(user.getUserName());
+//        System.out.println(u);
+//        System.out.println("EN PRINTLINE MATHILDA TEST" + u.get().toString());
+//        //User thisUser = userService.findUser(user);
+//        model.addAttribute("user", u.get());
         return "accountManagement";
     }
 
