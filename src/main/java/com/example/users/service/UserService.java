@@ -12,7 +12,7 @@ public interface UserService {
     void createUser(User user) throws UserNameExistException;
     User getUserById(Integer id);
     void delete(Integer id);
-    void saveUser(User user) throws UserNameExistException;
+    void updateUser(User user) throws UserNameExistException;
     List<User> getAllUsers();
     Optional<User> getUserByUserName(String userName);
 }

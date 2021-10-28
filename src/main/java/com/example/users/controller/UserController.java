@@ -40,15 +40,16 @@ public class UserController {
     @RequestMapping(value = "/c/myAccount", method = RequestMethod.POST) // TODO se över endpointen
     public String saveToDB(@ModelAttribute User user, RedirectAttributes ra, Model model)
     {
-        model.addAttribute("user", user);
+
 
         try {
-            userService.createUser(user);
+            userService.createUser(user);   // Ändra så att denna metod returnerar den skapade usern?
+            Optional<User> userCreated = userService.getUserByUserName(user.getUserName());
+            model.addAttribute("user", userCreated.get());
             ra.addFlashAttribute("message", "User created");
-            Thread.sleep(5000);
 
             return "accountManagement";
-        } catch (UserNameExistException | InterruptedException e) {
+        } catch (UserNameExistException e) {
             ra.addFlashAttribute("message", e.getMessage());
             return "redirect:/createAccount";
         }
@@ -69,7 +70,6 @@ public class UserController {
         Principal principal = request.getUserPrincipal();
         System.out.println("SNÄLLLLLA" + principal.getName());
         Optional<User> u = userService.getUserByUserName(principal.getName());
-        System.out.println("ÄR DETTTA VÅR ANVÄNDARE?? " + u.get().toString());
         if(u.isPresent()){
 
             if(u.get().getRoles().equals("ROLE_ADMIN")){
@@ -112,8 +112,9 @@ public class UserController {
     }
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") User user, RedirectAttributes ra) {
+        System.out.println("printa ut user gagagaga:" + user.toString());
         try {
-            userService.createUser(user);
+            userService.updateUser(user);
             ra.addFlashAttribute("message", "Användaren har uppdaterats");
         } catch (UserNameExistException e) {
             ra.addFlashAttribute("message", e.getMessage());
