@@ -8,7 +8,6 @@
 <body>
 <div class="container-fluid">
     <div class="text-center"><h2>[[${pageTitle}]]</h2></div>
-
     <form th:action="@{/saveUser}" method="post" th:object="${user}"
           style="max-width: 500px; margin: 0 auto;">
         <input type="hidden" th:field="*{id}">

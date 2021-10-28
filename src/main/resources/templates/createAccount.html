@@ -25,13 +25,13 @@
 <div id="products-header">
     Header of Create Account Page
 </div>
-<div id="products-nav" th:replace="~{/fragments/app-fragments :: nav-default}">
+<div id="products-nav" th:replace="~{/fragments/app-fragments :: nav-login}">
     Nav
 </div>
 <div id="products-main-content">
     <h2>Create Account</h2>
     <form th:action="@{/c/myAccount}" th:object="${user}" method="post"
-        style="max-width: 500px; margin: 0 auto;">
+          style="max-width: 500px; margin: 0 auto;">
         <div class="border border-secondary rounded p-3">
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">*User Name:</label>

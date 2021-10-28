@@ -5,6 +5,7 @@ import com.example.users.security.MyUserDetails;
 import com.example.users.security.MyUserDetailsService;
 import com.example.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,6 @@ public class UserController {
     public String saveToDB(@ModelAttribute User user, RedirectAttributes ra, Model model)
     {
         model.addAttribute("user", user);
-
         try {
             userService.createUser(user);
             ra.addFlashAttribute("message", "User created");
@@ -46,45 +46,7 @@ public class UserController {
             ra.addFlashAttribute("message", e.getMessage());
             return "redirect:/createAccount";
         }
-        //User thisUser = userService.findUser(user);
-        //model.addAttribute("thisUser", thisUser);
-
     }
-    // @RequestMapping(value = "/login", method = RequestMethod.GET)
-    // public String checkLogin(Model model)
-    // {
-    //     System.out.println("kan jag se detta");
-    //       model.addAttribute("user", new User());
-    //        return "login";
-    // }
-    @RequestMapping(value = "/myAccount", method = RequestMethod.GET) // TODO se över endpointen samt ovanstående metod (går att slå ihop?)
-    public String logOn(@ModelAttribute User thisUser, Model model)
-    {
-        Optional<User> u = userService.getUserByUserName(thisUser.getUserName());
-        if(u.isPresent()){
-            model.addAttribute("thisUser", u.get());
-            return "accountManagement";
-        }else {
-            return "redirect:/login";
-        }
-        //User thisUser = userService.findUser(user);
-
-
-
-    }
-
-    //     @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
-    //   public String getPassword(Model model){
-    //     model.addAttribute("user", new User());
-    //     return "forgotPassword";
-    //  }
-    //  @RequestMapping(value = "/forgotPassword/passRecovery", method = RequestMethod.POST)
-    // public String postSent(@ModelAttribute User user, Model model)
-    // {
-    //    model.addAttribute("user", user);
-    //     return "passRecovery";
-    //  }
-
 
     @GetMapping("/users/updateUser/{id}")
     public String updateUser(@PathVariable ( value = "id") Integer id, Model model){
@@ -96,38 +58,20 @@ public class UserController {
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") User user, RedirectAttributes ra) {
         try {
-            userService.createUser(user);
+            userService.saveUser(user);
             ra.addFlashAttribute("message", "Användaren har uppdaterats");
         } catch (UserNameExistException e) {
             ra.addFlashAttribute("message", e.getMessage());
+            return "updateUser";
         }
         return "redirect:/users";
     }
     @RequestMapping(value = "/updateAccount", method = RequestMethod.GET)
-    public String updateAccount(Model model){
+    public String updateAccount( Model model){
         model.addAttribute("user", new User());
         return "updateAccount";
 
     }
-
-    //@RequestMapping(value = "/u/myAccount", method = RequestMethod.POST) // TODO se över endpointen
-    //public String updated(@ModelAttribute User user, Model model){
-    //   model.addAttribute("user", user);
-    //  try{
-    //      userService.saveUser(user);
-    //  }catch (UserNameExistException e){
-    //     System.out.println(e);
-    // }
-
-        //User thisUser = userService.findUser(user);
-        //model.addAttribute("thisUser", thisUser);
-
-    //   return "accountManagement";
-    //}
-
-
-    // TODO Se över om nedan ska ligga i samma fil eller om den skall flyttas ut..
-    // ADMIN INLOGGAD
 
     @GetMapping("/users")
     public String showUserList(Model model){
