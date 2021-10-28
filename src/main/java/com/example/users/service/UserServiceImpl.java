@@ -15,13 +15,13 @@ public class UserServiceImpl implements UserService {
     UserRepository repo;
 
     @Override
-    public void createUser(User user) {
+    public void createUser(User user) throws UserNameExistException {
         Optional<User> u = repo.findUserByUserName(user.getUserName());
-        if (!u.isPresent())
-        repo.save(user);
-        else {
-            System.out.println("UPPTAGET!");
+        if (u.isPresent()){
+            throw new UserNameExistException("Användarnamnet är upptaget");
         }
+        repo.save(user);
+
 
     }
 

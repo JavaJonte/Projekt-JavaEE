@@ -7,7 +7,6 @@ import com.example.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
@@ -34,38 +33,44 @@ public class UserController {
         model.addAttribute("user", new User());
         return "createAccount";
     }
-    @RequestMapping(value = "/c/myAccount", method = RequestMethod.GET) // TODO se över endpointen
+    @RequestMapping(value = "/c/myAccount", method = RequestMethod.POST) // TODO se över endpointen
     public String saveToDB(@ModelAttribute User user, RedirectAttributes ra, Model model)
     {
         model.addAttribute("user", user);
+
         try {
             userService.createUser(user);
             ra.addFlashAttribute("message", "User created");
-        } catch (Exception e) {
+            return "accountManagement";
+        } catch (UserNameExistException e) {
             ra.addFlashAttribute("message", e.getMessage());
+            return "redirect:/createAccount";
         }
         //User thisUser = userService.findUser(user);
         //model.addAttribute("thisUser", thisUser);
-        return "accountManagement";
-    }
-     @RequestMapping(value = "/login", method = RequestMethod.GET)
-     public String checkLogin(Model model)
-     {
-         System.out.println("kan jag se detta");
-           model.addAttribute("user", new User());
-            return "login";
-     }
 
+    }
+    // @RequestMapping(value = "/login", method = RequestMethod.GET)
+    // public String checkLogin(Model model)
+    // {
+    //     System.out.println("kan jag se detta");
+    //       model.addAttribute("user", new User());
+    //        return "login";
+    // }
     @RequestMapping(value = "/myAccount", method = RequestMethod.GET) // TODO se över endpointen samt ovanstående metod (går att slå ihop?)
-    public String logOn(@ModelAttribute("user") User user, Model model)
+    public String logOn(@ModelAttribute User thisUser, Model model)
     {
-        System.out.println("wtf!!!!!"+user.getUserName());
-//        Optional<User> u = userService.getUserByUserName(user.getUserName());
-//        System.out.println(u);
-//        System.out.println("EN PRINTLINE MATHILDA TEST" + u.get().toString());
-//        //User thisUser = userService.findUser(user);
-//        model.addAttribute("user", u.get());
-        return "accountManagement";
+        Optional<User> u = userService.getUserByUserName(thisUser.getUserName());
+        if(u.isPresent()){
+            model.addAttribute("thisUser", u.get());
+            return "accountManagement";
+        }else {
+            return "redirect:/login";
+        }
+        //User thisUser = userService.findUser(user);
+
+
+
     }
 
     //     @RequestMapping(value = "/forgotPassword", method = RequestMethod.GET)
@@ -93,10 +98,10 @@ public class UserController {
         try {
             userService.createUser(user);
             ra.addFlashAttribute("message", "Användaren har uppdaterats");
-        } catch (Exception e) {
+        } catch (UserNameExistException e) {
             ra.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/";
+        return "redirect:/users";
     }
     @RequestMapping(value = "/updateAccount", method = RequestMethod.GET)
     public String updateAccount(Model model){
@@ -120,7 +125,9 @@ public class UserController {
     //   return "accountManagement";
     //}
 
+
     // TODO Se över om nedan ska ligga i samma fil eller om den skall flyttas ut..
+    // ADMIN INLOGGAD
 
     @GetMapping("/users")
     public String showUserList(Model model){
@@ -128,4 +135,14 @@ public class UserController {
         model.addAttribute("listUsers", listUsers);
         return "userList";
     }
+
+    @GetMapping("/users/delete/{id}")
+    public String deleteUser(@PathVariable("id") Integer id, RedirectAttributes ra){
+        userService.delete(id);
+        ra.addFlashAttribute("message", "Anvädaren med ID: " + id + " har raderats");
+
+        return "redirect:/users";
+    }
+
+
 }
