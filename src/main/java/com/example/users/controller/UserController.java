@@ -71,8 +71,16 @@ public class UserController {
         Optional<User> u = userService.getUserByUserName(principal.getName());
         System.out.println("ÄR DETTTA VÅR ANVÄNDARE?? " + u.get().toString());
         if(u.isPresent()){
-            model.addAttribute("user", u.get());
-            return "accountManagement";
+
+            if(u.get().getRoles().equals("ROLE_ADMIN")){
+                System.out.println("Hej hej , du har full behörighet!");
+                return "redirect:/users";
+            }
+            else {
+                model.addAttribute("user", u.get());
+                return "accountManagement";
+            }
+
         }else {
             return "redirect:/login";
         }

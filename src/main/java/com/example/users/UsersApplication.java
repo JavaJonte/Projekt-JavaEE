@@ -16,13 +16,13 @@ public class UsersApplication {
 
         // DEMO-OBJEKT
         User test = new User("HejHejHejHejHej", "DåHejHejHejHej", "email@email.se", "test", "test", "hemligt", "ROLE_ADMIN");
-        //User test2 = new User("NästaHejHejHej", "PersonHejHejHej", "emu@email.co", "Douglas ", "HejHejHejHej", "wtf");
+        User test2 = new User("NästaHejHejHej", "PersonHejHejHej", "emu@email.co", "testing ", "testing", "wtf", "ROLE_USER");
         //User test3 = new User("asdsadHejHejHej", "dgsaaHejHej", "kiwi@email.org", "Viktor", "admin", "odd");
 
         //test3.setAdmin(true);
         // SKAPA DEMO-OBJEKT
         userService.createUser(test);
-        //userService.createUser(test2);
+        userService.createUser(test2);
         //userService.createUser(test3);
 
         // TESTUTSKRIFT
@@ -35,7 +35,7 @@ public class UsersApplication {
 
 
         // TEST LISTA IGEN
-        //System.out.println(userService.getAllUsers());
+        System.out.println(userService.getAllUsers());
 
         // TEST GET ONE
         //System.out.println(userService.getUserById(1));
