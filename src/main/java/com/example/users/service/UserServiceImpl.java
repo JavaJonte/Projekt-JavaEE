@@ -38,9 +38,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(User user) throws UserNameExistException {
 
-        Optional<User> userNameFromDatabase = repo.findUserByUserName(user.getUserName()); // Denna rad funkar inte
+        Optional<User> userNameFromDatabase = repo.findUserByUserName(user.getUserName());
 
-        if(userNameFromDatabase.isPresent()){
+        if(userNameFromDatabase.isPresent() && userNameFromDatabase.get().getId() != user.getId()){
             throw new UserNameExistException("Användarnamnet är upptaget");
         } else {
             repo.save(user);
